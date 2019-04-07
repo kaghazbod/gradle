@@ -1,7 +1,7 @@
 import org.gradle.gradlebuild.unittestandcompile.ModuleType
 
 /*
- * Copyright 2015 the original author or authors.
+ * Copyright 2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,20 @@ import org.gradle.gradlebuild.unittestandcompile.ModuleType
  * limitations under the License.
  */
 plugins {
-    id 'java-library'
-    id 'gradlebuild.strict-compile'
-    id 'gradlebuild.classycle'
+    `java-library`
+    gradlebuild.`strict-compile`
+    gradlebuild.classycle
 }
 
 dependencies {
-    api project(':resources')
-    api project(':core')
+    api(project(":baseServices"))
+    api(project(":messaging"))
+    api(project(":native"))
+    api(project(":resources"))
+    api(project(":logging"))
 
-    implementation libraries.slf4j_api.coordinates
-    implementation libraries.guava.coordinates
-    implementation libraries.jsch.coordinates
-    implementation libraries.commons_io.coordinates
+    implementation(library("commons_io"))
+    implementation(library("commons_lang"))
 }
 
 gradlebuildJava {
@@ -36,13 +37,5 @@ gradlebuildJava {
 }
 
 testFixtures {
-    from(':dependencyManagement')
-    from(':ivy')
-    from(':maven')
-    from(':core')
-}
-
-import org.gradle.gradlebuild.testing.integrationtests.cleanup.WhenNotEmpty
-testFilesCleanup {
-    policy = WhenNotEmpty.REPORT
+    from(":core")
 }

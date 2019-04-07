@@ -1,7 +1,5 @@
-import org.gradle.gradlebuild.unittestandcompile.ModuleType
-
 /*
- * Copyright 2017 the original author or authors.
+ * Copyright 2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,27 +13,23 @@ import org.gradle.gradlebuild.unittestandcompile.ModuleType
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-    id 'java-library'
-    id 'gradlebuild.strict-compile'
-    id 'gradlebuild.classycle'
-}
 
-dependencies {
-    api project(":baseServices")
-    api project(":messaging")
-    api project(":native")
-    api project(":resources")
-    api project(":logging")
+package org.gradle.testing
 
-    implementation libraries.commons_io.coordinates
-    implementation libraries.commons_lang.coordinates
-}
+import groovy.transform.CompileStatic
+import groovy.transform.MapConstructor
 
-gradlebuildJava {
-    moduleType = ModuleType.CORE
-}
-
-testFixtures {
-    from(':core')
+// Modify this class with care, see class org.gradle.performance.results.ScenarioBuildResultData
+@MapConstructor
+@CompileStatic
+class ScenarioBuildResultData {
+    String teamCityBuildId
+    String scenarioName
+    String scenarioClass
+    String webUrl
+    String testFailure
+    // SUCCESS/FAILURE/UNKNOWN
+    String status
+    String agentName
+    String agentUrl
 }
